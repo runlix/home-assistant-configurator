@@ -1,0 +1,84 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:recommended"
+  ],
+  "baseBranches": [
+    "release"
+  ],
+  "enabledManagers": [
+    "github-actions",
+    "dockerfile",
+    "custom.regex"
+  ],
+  "packageRules": [
+    {
+      "matchManagers": [
+        "github-actions"
+      ],
+      "groupName": "GitHub Actions",
+      "pinDigests": true,
+      "automerge": false,
+      "commitMessageTopic": "{{depName}} GitHub Action"
+    },
+    {
+      "matchManagers": [
+        "custom.regex"
+      ],
+      "matchDatasources": [
+        "docker"
+      ],
+      "groupName": "Docker base images",
+      "pinDigests": true,
+      "automerge": false
+    },
+    {
+      "matchManagers": [
+        "custom.regex"
+      ],
+      "matchDatasources": [
+        "pypi"
+      ],
+      "groupName": "Python packages",
+      "automerge": false
+    }
+  ],
+  "customManagers": [
+    {
+      "customType": "regex",
+      "description": "Update hass-configurator package version in docker matrix",
+      "managerFilePatterns": [
+        "^\\.ci/docker-matrix\\.json$"
+      ],
+      "matchStrings": [
+        "\"HC_BUILD_VERSION\": \\\"(?<currentValue>[^\\\"]+)\\\""
+      ],
+      "depNameTemplate": "hass-configurator",
+      "datasourceTemplate": "pypi"
+    },
+    {
+      "customType": "regex",
+      "description": "Update BUILDER image tags and digests in docker matrix",
+      "managerFilePatterns": [
+        "^\\.ci/docker-matrix\\.json$"
+      ],
+      "matchStrings": [
+        "\"BUILDER_IMAGE\": \\\"(?<depName>[^\\\"]+)\\\",\\s*\"BUILDER_TAG\": \\\"(?<currentValue>[^\\\"]+)\\\",\\s*\"BUILDER_DIGEST\": \\\"(?<currentDigest>sha256:[a-f0-9]{64})\\\""
+      ],
+      "datasourceTemplate": "docker",
+      "versioningTemplate": "docker"
+    },
+    {
+      "customType": "regex",
+      "description": "Update BASE image tags and digests in docker matrix",
+      "managerFilePatterns": [
+        "^\\.ci/docker-matrix\\.json$"
+      ],
+      "matchStrings": [
+        "\"BASE_IMAGE\": \\\"(?<depName>[^\\\"]+)\\\",\\s*\"BASE_TAG\": \\\"(?<currentValue>[^\\\"]+)\\\",\\s*\"BASE_DIGEST\": \\\"(?<currentDigest>sha256:[a-f0-9]{64})\\\""
+      ],
+      "datasourceTemplate": "docker",
+      "versioningTemplate": "docker"
+    }
+  ]
+}
