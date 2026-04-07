@@ -1,28 +1,57 @@
 # home-assistant-configurator
 
-Kubernetes-native distroless Docker image for [Home Assistant Configurator](https://github.com/danielperna84/hass-configurator), based on [CausticLab/hass-configurator-docker](https://github.com/CausticLab/hass-configurator-docker).
+`home-assistant-configurator` publishes the Runlix container image for [Home Assistant Configurator](https://github.com/danielperna84/hass-configurator).
 
-## Purpose
+The current published image name is:
 
-Provides a minimal, secure Docker image for running Home Assistant Configurator in Kubernetes environments.
-
-## Features
-
-- Distroless base (no shell, minimal attack surface)
-- Kubernetes-native permissions (no s6-overlay)
-- Read-only root filesystem support
-- Non-root execution
-- Preserves upstream `settings.conf` startup behavior
-
-## Usage
-
-```bash
-docker run -d \
-  --name home-assistant-configurator \
-  -p 3218:3218 \
-  -v /path/to/configurator:/config \
-  -v /path/to/homeassistant-config:/hass-config \
-  ghcr.io/runlix/home-assistant-configurator:release-latest
+```text
+ghcr.io/runlix/home-assistant-configurator
 ```
 
-If `/config/settings.conf` exists, it is passed to `hass-configurator` exactly like the upstream image.
+Use a versioned stable manifest tag from [release.json](release.json):
+
+```dockerfile
+FROM ghcr.io/runlix/home-assistant-configurator:<version>-stable
+```
+
+The authoritative published tags, digests, and source revision live in [release.json](release.json).
+
+## What's Included
+
+- `hass-configurator`
+- `git`
+- `openssh-client`
+- `GitPython`
+- `pyotp`
+- the distroless runtime base from `distroless-runtime-v2-canary`
+
+The image keeps the distroless runtime model while preserving the upstream `/config/settings.conf` startup behavior through a small Python entrypoint shim.
+
+## Branch Layout
+
+`main` owns metadata and automation config:
+
+- `README.md`
+- `release.json`
+- `renovate.json`
+- `.github/workflows/validate-release-metadata.yml`
+
+`release` owns build and publish inputs:
+
+- `.ci/build.json`
+- `.ci/smoke-test.sh`
+- `linux-*.Dockerfile`
+- `.github/workflows/validate-build.yml`
+- `.github/workflows/publish-release.yml`
+
+## Release Flow
+
+Changes merge to `release`, where `Publish Release` builds the versioned `stable` and `debug` multi-arch manifests, attests them, optionally sends Telegram, and opens the sync PR back to `main`.
+
+`main` validates metadata and config-only changes with `Validate Release Metadata`.
+
+## Runtime Behavior
+
+If `/config/settings.conf` exists, the container starts `hass-configurator` with that file path exactly like the upstream image.
+
+Expose port `3218/tcp`, mount `/config` for persistent configurator state, and mount `/hass-config` if you want the configurator to work against a Home Assistant configuration directory at the conventional path.
