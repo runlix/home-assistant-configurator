@@ -1,13 +1,13 @@
 {
   "image": "ghcr.io/runlix/home-assistant-configurator",
   "version": "0.6.0",
-  "sha": "4b7d5b08f3a7f56d7c5a0190b988d34a85a485f8",
-  "short_sha": "4b7d5b0",
-  "published_at": "2026-04-16T17:57:42Z",
+  "sha": "c1ffec6881e22517f084fda959d50648a9379134",
+  "short_sha": "c1ffec6",
+  "published_at": "2026-04-22T05:58:27Z",
   "manifests": [
     {
       "tag": "0.5.2-debug",
-      "digest": "sha256:4afe61d4e1d0947afa72e3559824c01b34a601e07c2c2517a8318d886935dc49",
+      "digest": "sha256:e51322b941e4a4f3e527a7ffaf92486480d7e661095e22be1bdcb7ffd975cd8f",
       "platforms": [
         "linux/amd64",
         "linux/arm64"
@@ -15,7 +15,7 @@
     },
     {
       "tag": "0.5.2-stable",
-      "digest": "sha256:ba1910ea0d29e14f927001bc943a2dc86bfeab04fcd47692c74a6835f60ecb43",
+      "digest": "sha256:f036c52e6c3bf8db4f74e1b212ecf406e11c82badf41680fdf438b23297b7e27",
       "platforms": [
         "linux/amd64",
         "linux/arm64"
