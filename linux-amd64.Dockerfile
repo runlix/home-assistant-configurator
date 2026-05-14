@@ -1,7 +1,7 @@
 ARG BUILDER_REF="docker.io/library/debian:bookworm-slim@sha256:2749ca60ffb3c42de053229d7967d292d7dad1067936b38995da0bbfb96c4c23"
 ARG BASE_REF="ghcr.io/runlix/distroless-runtime-v2-canary:stable@sha256:1a89d10a17987e68616af43e078b60480fc6e889f16a5ab249568a17a1e8a8a8"
 ARG HC_BUILD_VERSION="0.5.2"
-ARG GITPYTHON_VERSION="3.1.46"
+ARG GITPYTHON_VERSION="3.1.50"
 ARG PYOTP_VERSION="2.9.0"
 
 FROM ${BUILDER_REF} AS configurator-deps
