@@ -1,5 +1,5 @@
 ARG BUILDER_REF="docker.io/library/debian:bookworm-slim@sha256:817e6cf99d6fc127ff4ffe8580049b60deba0adfbbb2bd65ddc3ef8fbb7aade0"
-ARG BASE_REF="ghcr.io/runlix/distroless-runtime-v2-canary:stable@sha256:5d2b787a00741eac07ebd579521380cab534e56ad199fa2e78dbbdd5aac70ecf"
+ARG BASE_REF="ghcr.io/runlix/distroless-runtime-v2-canary:stable@sha256:87dd2c28ec8bb85c31ad99a3138f570598ce0b6c3cb51b72cc23b4fa5d4031d4"
 ARG HC_BUILD_VERSION="0.5.2"
 ARG GITPYTHON_VERSION="3.1.46"
 ARG PYOTP_VERSION="2.9.0"
